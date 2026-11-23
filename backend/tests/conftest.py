@@ -10,7 +10,8 @@ import pytest
 
 from app.core import synth
 
-os.environ["WEATHER_AUTO"] = "0"           # no test may call the weather archive; test_weather stands in for it
+os.environ["TRACE_DOTENV"] = "0"           # a developer's .env must not reach the app under test (or the e2e processes)
+os.environ["WEATHER_AUTO"] = "0"          # no test may call the weather archive; test_weather stands in for it
 os.environ["PLACEBO_DAYS"] = "0"
 
 TEMP_C = 28.0

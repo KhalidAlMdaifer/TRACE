@@ -13,11 +13,14 @@ _dotenv_loaded = False
 
 
 def load_dotenv() -> None:
-    """Values already in the environment win over the file."""
+    """Values already in the environment win over the file. TRACE_DOTENV=0 skips the file:
+    the tests set it, so a developer's own .env cannot change what they check."""
     global _dotenv_loaded
     if _dotenv_loaded:
         return
     _dotenv_loaded = True
+    if os.environ.get("TRACE_DOTENV") == "0":
+        return
     p = Path(".env")
     if p.is_file():
         for line in p.read_text().splitlines():
