@@ -1,0 +1,48 @@
+# TRACE: the api, the job worker and the interface. Settings come from .env (see .env.example).
+#   cp .env.example .env     # then set APP_SECRET, ADMIN_EMAIL and ADMIN_PASSWORD
+#   mkdir -p data          # or Docker makes it as root and the containers cannot write to it
+#   docker compose up --build
+#   open http://localhost:8080
+x-paths: &paths
+  DATA_DIR: /data
+  DOPPLERTRACK_CACHE: /data/cache/dopplertrack
+
+services:
+  api:
+    build: .
+    env_file: .env
+    environment:
+      <<: *paths
+      # the only way in is the frontend's proxy, which states the visitor's address: record that
+      # one in the audit log and count failed sign-ins against it, not against the proxy
+      FORWARDED_ALLOW_IPS: "*"
+    volumes: &data
+      - ./data:/data
+    # the host's user, so what lands in ./data is yours to read and delete
+    user: "${TRACE_UID:-1000}:${TRACE_GID:-1000}"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request,urllib.error,sys\ntry: urllib.request.urlopen('http://127.0.0.1:8000/api/auth/me')\nexcept urllib.error.HTTPError as e: sys.exit(0 if e.code == 401 else 1)"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+
+  worker:
+    build: .
+    command: ["python", "-m", "app.worker"]
+    env_file: .env
+    environment: *paths
+    volumes: *data
+    user: "${TRACE_UID:-1000}:${TRACE_GID:-1000}"
+    restart: unless-stopped
+    # a job that is stopped takes its whole process group with it
+    init: true
+
+  frontend:
+    build: ./frontend
+    ports:
+      - "${TRACE_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped

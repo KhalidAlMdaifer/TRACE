@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Roughly where</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&amp;family=Instrument+Sans:wght@400;500;600&amp;display=swap">
+<style>
+body{margin:0}
+a{color:#F4F1E8}a:hover{color:#FFFFFF}
+</style>
+</helmet>
+<div style="min-height: 100vh; display: flex; flex-wrap: wrap; background: #0C0C0B; color: #F4F1E8; font-family: 'Instrument Sans', system-ui, sans-serif; font-size: 15px; line-height: 1.5">
+<aside style="flex: 1 1 400px; box-sizing: border-box; padding: 28px; display: flex; flex-direction: column; gap: 20px; background: #111110; border-right: 1px solid #272725">
+<header style="display: flex; align-items: center; justify-content: space-between; gap: 12px">
+<div style="display: flex; align-items: center; gap: 10px">
+<svg aria-hidden="true" width="24" height="24" viewBox="0 0 24 24"><path d="M2 4h4M10 4h4M18 4h4M2 12h4M18 12h4M2 20h4M10 20h4M18 20h4" fill="none" stroke="#F4F1E8" stroke-width="4"></path><path d="M9 12h6" fill="none" stroke="#FF4D42" stroke-width="6"></path></svg>
+<span style="font-weight: 600; font-size: 16px; letter-spacing: -0.01em">[App name]</span>
+</div>
+<span style="padding: 6px 12px; border: 1px solid #3A3A36; border-radius: 999px; font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #A8A39A">[Analyst]</span>
+</header>
+<nav aria-label="Progress" style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px 10px; padding-bottom: 18px; border-bottom: 1px solid #272725">
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; background: #F4F1E8"></span><span style="font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #A8A39A">Upload</span></div>
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; background: #F4F1E8"></span><span style="font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #A8A39A">When</span></div>
+<div aria-current="step" style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; background: #FF4D42"></span><span style="font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #F4F1E8">Where</span></div>
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; background: #3A3A36"></span><span style="font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A857C">Flyovers</span></div>
+<div style="display: flex; align-items: center; gap: 8px"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; background: #3A3A36"></span><span style="font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #8A857C">Review</span></div>
+</nav>
+<div style="display: flex; align-items: center; gap: 12px; padding: 12px 14px; border: 1px solid #272725; border-radius: 16px; background: #171716">
+<span aria-hidden="true" style="flex: none; display: flex; align-items: center; justify-content: center; width: 36px; height: 36px; border: 1px solid #3A3A36; border-radius: 50%"><svg width="14" height="14" viewBox="0 0 14 14" fill="#F4F1E8"><path d="M4 2.5v9l7.5-4.5z"></path></svg></span>
+<div style="flex: 1 1 auto; min-width: 0; display: flex; flex-direction: column; gap: 4px">
+<div style="display: flex; justify-content: space-between; gap: 8px; font-size: 14px"><span style="font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap">clip_0412.mp4</span><span style="font-family: 'DM Mono', ui-monospace, monospace; font-size: 12px; color: #A8A39A">32:10</span></div>
+<div style="display: flex; align-items: center; gap: 8px; font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #F4F1E8"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; background: #FF4D42"></span><span>26 of 32 min checked · 5 proposed</span></div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 10px">
+<h1 style="margin: 0; font-weight: 500; font-size: 34px; line-height: 1.08; letter-spacing: -0.02em">Roughly where?</h1>
+<p style="margin: 0; color: #A8A39A">Pick one or more emirates, here or on the map. Matches outside them are flagged, not hidden.</p>
+</div>
+<div role="group" aria-label="Emirates" style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px">
+<button type="button" aria-pressed="false" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid #3A3A36; border-radius: 12px; background: #171716; color: #F4F1E8; font: inherit; font-size: 14px; text-align: left"><span aria-hidden="true" style="flex: none; box-sizing: border-box; width: 8px; height: 8px; border: 1.5px solid #8A857C"></span><span>Abu Dhabi</span></button>
+<button type="button" aria-pressed="true" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid #FF4D42; border-radius: 12px; background: rgba(255,77,66,0.14); color: #F4F1E8; font: inherit; font-size: 14px; font-weight: 600; text-align: left"><span aria-hidden="true" style="flex: none; width: 8px; height: 8px; background: #FF4D42"></span><span>Dubai</span></button>
+<button type="button" aria-pressed="false" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid #3A3A36; border-radius: 12px; background: #171716; color: #F4F1E8; font: inherit; font-size: 14px; text-align: left"><span aria-hidden="true" style="flex: none; box-sizing: border-box; width: 8px; height: 8px; border: 1.5px solid #8A857C"></span><span>Sharjah</span></button>
+<button type="button" aria-pressed="false" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid #3A3A36; border-radius: 12px; background: #171716; color: #F4F1E8; font: inherit; font-size: 14px; text-align: left"><span aria-hidden="true" style="flex: none; box-sizing: border-box; width: 8px; height: 8px; border: 1.5px solid #8A857C"></span><span>Ajman</span></button>
+<button type="button" aria-pressed="false" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid #3A3A36; border-radius: 12px; background: #171716; color: #F4F1E8; font: inherit; font-size: 14px; text-align: left"><span aria-hidden="true" style="flex: none; box-sizing: border-box; width: 8px; height: 8px; border: 1.5px solid #8A857C"></span><span>Umm Al Quwain</span></button>
+<button type="button" aria-pressed="false" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid #3A3A36; border-radius: 12px; background: #171716; color: #F4F1E8; font: inherit; font-size: 14px; text-align: left"><span aria-hidden="true" style="flex: none; box-sizing: border-box; width: 8px; height: 8px; border: 1.5px solid #8A857C"></span><span>Ras Al Khaimah</span></button>
+<button type="button" aria-pressed="false" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px solid #3A3A36; border-radius: 12px; background: #171716; color: #F4F1E8; font: inherit; font-size: 14px; text-align: left"><span aria-hidden="true" style="flex: none; box-sizing: border-box; width: 8px; height: 8px; border: 1.5px solid #8A857C"></span><span>Fujairah</span></button>
+<button type="button" aria-pressed="false" style="display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 14px; border: 1px dashed #55524C; border-radius: 12px; background: transparent; color: #A8A39A; font: inherit; font-size: 14px; text-align: left"><span>Not sure, search all</span></button>
+</div>
+<div style="display: flex; flex-direction: column; border: 1px solid #272725; border-radius: 16px; background: #171716">
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 0 16px; border-bottom: 1px solid #272725"><span style="font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #A8A39A">Your area</span><span style="font-size: 14px; font-weight: 500">Dubai</span></div>
+<div style="display: flex; align-items: center; justify-content: space-between; gap: 12px; min-height: 44px; padding: 0 16px"><span style="font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #A8A39A">Search covers</span><span style="font-size: 14px; font-weight: 500">All UAE flights that day</span></div>
+</div>
+<div style="margin-top: auto; display: flex; gap: 12px">
+<a href="When.dc.html" style="display: flex; align-items: center; justify-content: center; min-height: 48px; padding: 0 22px; border: 1px solid #3A3A36; border-radius: 999px; background: #1C1C1A; color: #F4F1E8; font-weight: 500; text-decoration: none">Back</a>
+<a href="Flyovers.dc.html" style="display: flex; align-items: center; justify-content: center; gap: 10px; flex: 1 1 auto; min-height: 48px; padding: 0 24px; border-radius: 999px; background: #F4F1E8; color: #0C0C0B; font-weight: 600; text-decoration: none"><span>Continue</span><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#0C0C0B" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"><path d="M3 8h10"></path><path d="M9 4l4 4-4 4"></path></svg></a>
+</div>
+</aside>
+<main style="flex: 999 1 560px; min-width: 0; min-height: 480px; position: relative; background: #0C0C0B">
+<svg role="img" aria-label="Dot-matrix map of the seven emirates with Dubai selected in red" viewBox="0 0 1000 760" preserveAspectRatio="xMidYMid meet" style="position: absolute; inset: 0; width: 100%; height: 100%">
+<g fill="#8A857C" font-family="'DM Mono', ui-monospace, monospace" font-size="11" letter-spacing="0.8">
+<text x="109" y="752" text-anchor="middle">52°E</text><text x="291" y="752" text-anchor="middle">53°E</text><text x="473" y="752" text-anchor="middle">54°E</text><text x="655" y="752" text-anchor="middle">55°E</text><text x="837" y="752" text-anchor="middle">56°E</text>
+<text x="8" y="44">26°N</text><text x="8" y="244">25°N</text><text x="8" y="444">24°N</text><text x="8" y="644">23°N</text>
+</g>
+<g fill="#111110" stroke="#3A3A36" stroke-width="1" stroke-linejoin="round">
+<polygon points="33,390 64,430 218,402 373,420 455,410 541,346 592,296 637,266 701,310 755,320 792,316 806,306 801,370 801,440 755,520 728,620 692,700 655,714 215,652"></polygon>
+<polygon points="721,178 732,162 745,166 764,158 801,160 828,180 837,220 828,262 806,306 797,296 783,264 768,230 746,200"></polygon>
+<polygon points="732,162 741,154 752,157 745,166"></polygon>
+<polygon points="741,154 750,140 786,114 810,140 801,160 764,158 752,157"></polygon>
+<polygon points="786,114 826,82 850,26 865,50 870,110 855,140 837,164 828,180 801,160 810,140"></polygon>
+<polygon points="870,110 886,116 903,172 903,216 905,246 874,256 846,270 828,262 837,220 828,180 837,164 855,140"></polygon>
+</g>
+<path d="M844.5 35H849.5M844.5 49H863.5M844.5 63H863.5M830.5 77H863.5M816.5 91H863.5M802.5 105H863.5M788.5 119H877.5M760.5 133H891.5M746.5 147H891.5M732.5 161H737.5M760.5 161H891.5M732.5 175H891.5M718.5 189H891.5M704.5 203H891.5M690.5 217H905.5M676.5 231H905.5M662.5 245H905.5M648.5 259H863.5M634.5 273H835.5M606.5 287H835.5M592.5 301H807.5M578.5 315H807.5M564.5 329H793.5M550.5 343H793.5M536.5 357H793.5M508.5 371H793.5M494.5 385H793.5M480.5 399H793.5M46.5 413H51.5M158.5 413H303.5M438.5 413H793.5M88.5 427H793.5M74.5 441H793.5M88.5 455H793.5M88.5 469H779.5M102.5 483H765.5M116.5 497H765.5M116.5 511H751.5M130.5 525H751.5M144.5 539H751.5M144.5 553H737.5M158.5 567H737.5M172.5 581H737.5M186.5 595H723.5M186.5 609H723.5M200.5 623H723.5M214.5 637H709.5M214.5 651H709.5M312.5 665H709.5M410.5 679H695.5M508.5 693H695.5M606.5 707H667.5" fill="none" stroke="#3A3A36" stroke-width="5" stroke-dasharray="5 9"></path>
+<path d="M844.5 35h5M858.5 63h5M816.5 91h5M830.5 91h5M830.5 105h5M872.5 133h5M886.5 133h5M802.5 161h5M774.5 175h5M802.5 175h5M788.5 189h5M858.5 189h5M872.5 189h5M788.5 203h5M858.5 203h5M732.5 217h5M746.5 217h5M872.5 217h5M788.5 231h5M844.5 231h5M662.5 245h5M676.5 245h5M704.5 245h5M844.5 245h5M718.5 259h5M774.5 259h5M788.5 259h5M690.5 273h5M802.5 273h5M620.5 287h5M718.5 287h5M620.5 301h5M676.5 301h5M690.5 301h5M704.5 301h5M718.5 301h5M746.5 301h5M620.5 315h5M704.5 315h5M802.5 315h5M578.5 329h5M746.5 329h5M788.5 329h5M550.5 343h5M676.5 343h5M690.5 343h5M704.5 343h5M746.5 343h5M788.5 343h5M564.5 357h5M606.5 357h5M662.5 357h5M690.5 357h5M774.5 357h5M522.5 371h5M564.5 371h5M592.5 371h5M620.5 371h5M718.5 371h5M732.5 371h5M494.5 385h5M508.5 385h5M578.5 385h5M620.5 385h5M704.5 385h5M746.5 385h5M788.5 385h5M536.5 399h5M648.5 399h5M718.5 399h5M774.5 399h5M438.5 413h5M466.5 413h5M480.5 413h5M606.5 413h5M704.5 413h5M88.5 427h5M130.5 427h5M144.5 427h5M214.5 427h5M228.5 427h5M256.5 427h5M452.5 427h5M508.5 427h5M522.5 427h5M620.5 427h5M690.5 427h5M74.5 441h5M214.5 441h5M242.5 441h5M284.5 441h5M396.5 441h5M466.5 441h5M508.5 441h5M550.5 441h5M662.5 441h5M704.5 441h5M144.5 455h5M242.5 455h5M284.5 455h5M298.5 455h5M396.5 455h5M410.5 455h5M452.5 455h5M508.5 455h5M592.5 455h5M606.5 455h5M718.5 455h5M732.5 455h5M788.5 455h5M200.5 469h5M368.5 469h5M382.5 469h5M466.5 469h5M508.5 469h5M592.5 469h5M634.5 469h5M746.5 469h5M760.5 469h5M186.5 483h5M228.5 483h5M242.5 483h5M312.5 483h5M368.5 483h5M438.5 483h5M452.5 483h5M480.5 483h5M508.5 483h5M662.5 483h5M116.5 497h5M284.5 497h5M368.5 497h5M480.5 497h5M606.5 497h5M662.5 497h5M690.5 497h5M746.5 497h5M228.5 511h5M242.5 511h5M284.5 511h5M382.5 511h5M564.5 511h5M732.5 511h5M746.5 511h5M144.5 525h5M158.5 525h5M270.5 525h5M284.5 525h5M340.5 525h5M634.5 525h5M662.5 525h5M704.5 525h5M746.5 525h5M242.5 539h5M382.5 539h5M480.5 539h5M522.5 539h5M620.5 539h5M662.5 539h5M676.5 539h5M690.5 539h5M270.5 553h5M382.5 553h5M466.5 553h5M480.5 553h5M536.5 553h5M564.5 553h5M620.5 553h5M648.5 553h5M676.5 553h5M690.5 553h5M158.5 567h5M214.5 567h5M242.5 567h5M256.5 567h5M298.5 567h5M340.5 567h5M354.5 567h5M382.5 567h5M410.5 567h5M452.5 567h5M508.5 567h5M620.5 567h5M662.5 567h5M228.5 581h5M270.5 581h5M368.5 581h5M438.5 581h5M452.5 581h5M480.5 581h5M522.5 581h5M550.5 581h5M592.5 581h5M620.5 581h5M634.5 581h5M676.5 581h5M690.5 595h5M718.5 595h5M214.5 609h5M284.5 609h5M564.5 609h5M578.5 609h5M592.5 609h5M634.5 609h5M648.5 609h5M200.5 623h5M228.5 623h5M424.5 623h5M438.5 623h5M494.5 623h5M536.5 623h5M662.5 623h5M690.5 623h5M704.5 623h5M718.5 623h5M228.5 637h5M284.5 637h5M312.5 637h5M340.5 637h5M452.5 637h5M466.5 637h5M592.5 637h5M606.5 637h5M662.5 637h5M256.5 651h5M298.5 651h5M368.5 651h5M466.5 651h5M620.5 651h5M438.5 665h5M452.5 665h5M466.5 665h5M578.5 665h5M648.5 665h5M508.5 679h5M690.5 679h5M522.5 693h5M648.5 707h5M662.5 707h5" fill="none" stroke="#6B6862" stroke-width="5"></path>
+<g fill="none" stroke="#FF4D42" stroke-width="1.5" stroke-linejoin="round">
+<polygon points="637,266 659,244 710,186 721,178 746,200 768,230 783,264 797,296 806,306 792,316 755,320 701,310"></polygon>
+<polygon points="828,262 846,270 837,290 806,306"></polygon>
+</g>
+<path d="M718.5 189H723.5M704.5 203H737.5M690.5 217H751.5M676.5 231H765.5M662.5 245H765.5M648.5 259H779.5M648.5 273H779.5M830.5 273H835.5M676.5 287H793.5M816.5 287H835.5M690.5 301H793.5M732.5 315H793.5" fill="none" stroke="#FF4D42" stroke-width="5" stroke-dasharray="5 9"></path>
+<g stroke="#55524C" stroke-width="1">
+<line x1="708" y1="134" x2="735" y2="158"></line>
+<line x1="726" y1="108" x2="764" y2="136"></line>
+<line x1="780" y1="62" x2="822" y2="86"></line>
+<line x1="914" y1="196" x2="896" y2="196"></line>
+</g>
+<g font-family="'DM Mono', ui-monospace, monospace" font-size="12" letter-spacing="1" fill="#C9C5BB" stroke="#0C0C0B" stroke-width="4" stroke-linejoin="round" paint-order="stroke">
+<text x="420" y="548" text-anchor="middle">ABU DHABI</text>
+<text x="812" y="222" text-anchor="middle">SHARJAH</text>
+<text x="704" y="138" text-anchor="end">AJMAN</text>
+<text x="722" y="112" text-anchor="end">UMM AL QUWAIN</text>
+<text x="776" y="66" text-anchor="end">RAS AL KHAIMAH</text>
+<text x="918" y="200">FUJAIRAH</text>
+<text x="716" y="266" text-anchor="middle" fill="#F4F1E8">DUBAI</text>
+</g>
+</svg>
+<div style="position: absolute; top: 20px; right: 20px; display: flex; align-items: center; gap: 10px; padding: 10px 14px; border: 1px solid #272725; border-radius: 12px; background: #111110; font-family: 'DM Mono', ui-monospace, monospace; font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #A8A39A"><span aria-hidden="true" style="flex: none; width: 6px; height: 6px; background: #FF4D42"></span><span>Your selected area</span></div>
+<button type="button" style="position: absolute; right: 20px; bottom: 20px; display: flex; align-items: center; gap: 10px; min-height: 48px; padding: 0 20px; border: 1px solid #3A3A36; border-radius: 999px; background: #1C1C1A; color: #F4F1E8; font: inherit; font-size: 14px; font-weight: 500"><svg aria-hidden="true" width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="#A8A39A" stroke-width="1.5" stroke-dasharray="3 2"><rect x="2" y="3" width="12" height="10"></rect></svg><span>Draw a custom area</span></button>
+</main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":960}}'>
+class Component extends DCLogic {
+renderVals() {
+return {};
+}
+}
+</script>
+</body>
+</html>

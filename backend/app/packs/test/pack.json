@@ -1,0 +1,30 @@
+{
+  "id": "test",
+  "name": "Synthetic test pack",
+  "timezone": "Asia/Dubai",
+  "bbox": [
+    24.0,
+    26.2,
+    54.0,
+    56.6
+  ],
+  "terrain_zoom": null,
+  "climate_c": {
+    "01": 19,
+    "02": 20,
+    "03": 23,
+    "04": 27,
+    "05": 31,
+    "06": 33,
+    "07": 35,
+    "08": 35,
+    "09": 33,
+    "10": 29,
+    "11": 31,
+    "12": 21
+  },
+  "climate_note": "Invented values for tests; November is set so the layer-mean fallback is 28 C, the synthetic case's temperature.",
+  "demo_case": null,
+  "dev_only": true,
+  "short_name": "test pack"
+}

@@ -1,0 +1,6 @@
+site,lat,lon,prop_passes,jet_passes,unknown_passes,prop_pairs_1_to_30_min,prop_aircraft,prop_types,prop_passes_by_local_hour
+Al Ain airport,24.2617,55.6092,25,0,1,15,13,PC21:19 SR22:6,09:6 12:9 15:4 16:1 17:2 18:2 19:1
+Training area S of Dubai South,24.7,55.3,42,12,3,32,17,SR22:37 DA42:5,08:2 09:1 10:5 11:5 12:5 13:5 14:6 15:5 16:4 17:2 18:1 19:1
+Al Bateen airport,24.4283,54.4581,2,75,6,0,1,P180:2,07:1 11:1
+RAK airport,25.6135,55.9388,4,0,0,2,2,SR22:4,10:3 13:1
+Between AD and Al Ain,24.35,55.55,32,4,1,19,16,PC21:21 SR22:6 B505:5,08:6 11:3 12:7 14:5 16:1 17:2 18:2 19:1 20:2 22:1 23:2

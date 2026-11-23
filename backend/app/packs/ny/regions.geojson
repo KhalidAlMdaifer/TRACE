@@ -1,0 +1,4 @@
+{"type": "FeatureCollection", "features": [
+ {"type": "Feature", "properties": {"id": "ny", "name": "New York area", "parent": null},
+  "geometry": {"type": "Polygon", "coordinates": [[[-74.4, 40.4], [-72.6, 40.4], [-72.6, 41.3], [-74.4, 41.3], [-74.4, 40.4]]]}}
+]}

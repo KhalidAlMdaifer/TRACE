@@ -1,0 +1,85 @@
+{
+ "id": "uae",
+ "name": "United Arab Emirates",
+ "short_name": "UAE",
+ "timezone": "Asia/Dubai",
+ "bbox": [
+  22.6,
+  26.1,
+  51.5,
+  56.4
+ ],
+ "terrain_zoom": 12,
+ "climate_c": {
+  "01": 19,
+  "02": 20,
+  "03": 23,
+  "04": 27,
+  "05": 31,
+  "06": 33,
+  "07": 35,
+  "08": 35,
+  "09": 33,
+  "10": 29,
+  "11": 25,
+  "12": 21
+ },
+ "climate_note": "Approximate monthly mean air temperatures for the UAE coast, from memory, not from a cited source. Fallback only, used when the analyst gives no temperature; replace with a weather archive in M5.",
+ "weather_point": [
+  24.9,
+  55.2
+ ],
+ "weather_note": "Where the automatic temperature is looked up: one point for the whole pack.",
+ "labels": {
+  "ajman": {
+   "at": [
+    25.5,
+    55.16
+   ],
+   "to": [
+    25.41,
+    55.47
+   ],
+   "anchor": "end"
+  },
+  "umm_al_quwain": {
+   "at": [
+    25.68,
+    55.3
+   ],
+   "to": [
+    25.56,
+    55.57
+   ],
+   "anchor": "end"
+  },
+  "ras_al_khaimah": {
+   "at": [
+    25.97,
+    55.62
+   ],
+   "to": [
+    25.8,
+    55.95
+   ],
+   "anchor": "end"
+  },
+  "fujairah": {
+   "at": [
+    25.33,
+    56.5
+   ],
+   "to": [
+    25.25,
+    56.34
+   ],
+   "anchor": "start"
+  }
+ },
+ "boundaries": {
+  "source": "OpenStreetMap contributors: emirates via geoBoundaries (gbOpen ARE ADM1, 2017, release 9469f09); Abu Dhabi regions from OSM relations 13249272, 13249273, 13249274, cut to the emirate outline",
+  "licence": "Open Database License 1.0",
+  "built_by": "scripts/build_uae_pack.py"
+ },
+ "demo_case": null
+}
