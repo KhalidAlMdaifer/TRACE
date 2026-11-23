@@ -20,6 +20,8 @@ from dopplertrack.geo import haversine_m
 
 from app.core import synth
 
+from .conftest import WORKERS
+
 pytestmark = pytest.mark.slow
 
 
@@ -37,7 +39,7 @@ class Site:
         self.base = f"http://127.0.0.1:{self.port}"
         self.creds = {"email": "analyst@trace.test", "password": secrets.token_urlsafe(12)}
         self.env = {**os.environ, "DATA_DIR": str(data), "APP_SECRET": secrets.token_urlsafe(24), "ADMIN_EMAIL": self.creds["email"],
-                    "ADMIN_PASSWORD": self.creds["password"], "TRACE_SYNTHETIC_TYPES": "1", "DOPPLER_WORKERS": "5", "FIT_WORKERS": "3",
+                    "ADMIN_PASSWORD": self.creds["password"], "TRACE_SYNTHETIC_TYPES": "1", "DOPPLER_WORKERS": str(min(WORKERS, 5)), "FIT_WORKERS": "3",
                     "FIT_INLINE": "0", "DEFAULT_PACK": "test", "PYTHONUNBUFFERED": "1", "WEATHER_AUTO": "0", "PLACEBO_DAYS": "0"}
         self.api = self.worker = None
 

@@ -11,6 +11,8 @@ import pytest
 
 from app.core import synth
 
+from .conftest import WORKERS
+
 CLIP_S = 420                       # long enough to hold flight 1's flyover and its box
 
 
@@ -32,7 +34,7 @@ def site(case3, tmp_path_factory):
     creds = {"email": "analyst@trace.test", "password": secrets.token_urlsafe(12)}
     mp = pytest.MonkeyPatch()
     for k, v in {"DATA_DIR": str(data), "APP_SECRET": secrets.token_urlsafe(24), "ADMIN_EMAIL": creds["email"],
-                 "ADMIN_PASSWORD": creds["password"], "FIT_INLINE": "1", "TRACE_SYNTHETIC_TYPES": "1", "DOPPLER_WORKERS": "4",
+                 "ADMIN_PASSWORD": creds["password"], "FIT_INLINE": "1", "TRACE_SYNTHETIC_TYPES": "1", "DOPPLER_WORKERS": str(min(WORKERS, 4)),
                  "DEFAULT_PACK": "test", "RATE_UPLOADS_PER_HOUR": "50"}.items():
         mp.setenv(k, v)
     from app.api.main import create_app

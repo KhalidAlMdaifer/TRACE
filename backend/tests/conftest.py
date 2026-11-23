@@ -3,6 +3,7 @@ the slow part of the suite, so the tests share them."""
 from __future__ import annotations
 
 import os
+import sys
 from types import SimpleNamespace
 
 import pytest
@@ -13,7 +14,8 @@ os.environ["WEATHER_AUTO"] = "0"           # no test may call the weather archiv
 os.environ["PLACEBO_DAYS"] = "0"
 
 TEMP_C = 28.0
-WORKERS = min(os.cpu_count() or 1, 8)
+# rule 7: the library forks its pool, which is unsafe on macOS once BLAS has run; one worker off Linux
+WORKERS = min(os.cpu_count() or 1, 8) if sys.platform.startswith("linux") else 1
 
 
 def _build_case(tmp, n_flights):
