@@ -26,8 +26,12 @@ def alive(pid: int) -> bool:
         os.kill(pid, 0)
     except ProcessLookupError:
         return False
-    with open(f"/proc/{pid}/stat") as fh:               # a zombie is not alive
-        return fh.read().split(")")[-1].split()[0] != "Z"
+    # a zombie is not alive. Linux has /proc; macOS does not, so ask ps there
+    if os.path.exists(f"/proc/{pid}/stat"):
+        with open(f"/proc/{pid}/stat") as fh:
+            return fh.read().split(")")[-1].split()[0] != "Z"
+    state = subprocess.run(["ps", "-o", "stat=", "-p", str(pid)], capture_output=True, text=True).stdout.strip()
+    return bool(state) and not state.startswith("Z")
 
 
 def test_a_helper_process_ends_when_its_parent_is_killed(tmp_path):
