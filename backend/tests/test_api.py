@@ -170,6 +170,16 @@ def test_upload_rules(api, case, tmp_path):
     assert r.status_code == 409 and err(r) == "media_exists"
 
 
+def test_a_recording_over_the_length_limit_is_refused(api, site, short_wav, monkeypatch):
+    monkeypatch.setenv("MAX_DURATION_H", str(round((CLIP_S - 60) / 3600, 4)))     # a minute shorter than the clip
+    cid = api.post("/api/cases", json={"pack_id": "test"}).json()["id"]
+    with open(short_wav, "rb") as fh:
+        r = api.post(f"/api/cases/{cid}/media", files={"file": ("long.wav", fh, "audio/wav")})
+    assert r.status_code == 422 and err(r) == "too_long" and "hours" in r.json()["error"]["message"]
+    assert api.get(f"/api/cases/{cid}").json()["media"] is None
+    assert not list((site["data"] / "uploads" / cid).glob("original*"))             # nothing of it is kept
+
+
 def test_case_fields_are_validated(api, case):
     assert api.patch(f"/api/cases/{case}", json={"date_local": "14/11/2026"}).status_code == 422
     assert api.patch(f"/api/cases/{case}", json={"region_ids": ["atlantis"]}).status_code == 422
