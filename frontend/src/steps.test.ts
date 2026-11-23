@@ -52,6 +52,10 @@ describe("the step machine", () => {
     expect(resolveStep("searching", done)).toBe("result");
     expect(resolveStep("searching", two)).toBe("review");
     expect(resolveStep("result", two)).toBe("review");
+    // a new search on a case that already has a result: the old one must not show as current
+    const researching: Case = { ...done, job: searching.job };
+    expect(resolveStep("result", researching)).toBe("searching");
+    expect(resumeStep(researching)).toBe("searching");
   });
 
   it("marks done, current and later steps", () => {

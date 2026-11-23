@@ -41,6 +41,8 @@ export function resumeStep(c: Case | null): Step {
 /** The step to show for a requested one: itself when allowed, else the nearest earlier step that is. */
 export function resolveStep(requested: string | null, c: Case | null): Step {
   if (!requested || !isStep(requested)) return resumeStep(c);
+  // a running search wins over an earlier result, which it is about to replace
+  if (requested === "result" && c && searchActive(c)) return "searching";
   if (canEnter(requested, c)) return requested;
   // a search that has ended: its screen gives way to the result, or back to review
   if (requested === "searching" && c) return c.result ? "result" : resolveStep("review", c);
