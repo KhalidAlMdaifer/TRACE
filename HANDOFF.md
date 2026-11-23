@@ -20,9 +20,10 @@ open-source [dopplertrack](https://github.com/mjshiggins/dopplertrack) library; 
 tool built around it. It is a hackathon MVP made by one person in about two days.
 
 **Status:** all six planned milestones (M0 to M6) are done and committed, followed by two
-rounds of additions and a review-and-fix pass. The backend has 103 tests (one of them needs a
-reference recording and is skipped by default) and the frontend 16. It runs with or without
-Docker. It has been proven on one real recording (New York); it has **not** yet been tested
+rounds of additions, a review-and-fix pass, and a hardening pass on the presenting Mac
+(2026-11-24). The backend has 107 tests (one of them needs a reference recording and is
+skipped by default) and the frontend 16. It runs with or without Docker, and natively on
+macOS with one engine worker. It has been proven on one real recording (New York); it has **not** yet been tested
 on a real recording from the UAE, which is the region it is aimed at.
 
 ## 2. How to read this repository
@@ -342,7 +343,10 @@ Measured during the build; method in `docs/03-method-and-evidence.md`.
 
 **Of the engineering**
 
-- No CI. The backend suite takes about 13 minutes. Frontend tests cover only pure functions.
+- No CI. The backend suite takes about 13 minutes on eight Linux cores and about 27 on the
+  presenting Mac (one engine worker). Frontend tests cover only pure functions.
+- On the Mac a synthetic Located search takes about 4 to 4.5 minutes, against 1 min 45 s on
+  Linux; macOS gives the engine one worker (rule 7).
 - Docker was built and run once by hand, never from an empty clone. The last Docker changes
   (forwarded address, security headers) were checked outside Docker only.
 - HTTPS is not provided; a deployment's own proxy must add it and set `SESSION_SECURE=1`.

@@ -36,7 +36,8 @@ implementations from `scripts/smoke_dopplertrack.py` now live in `core/events.py
 ## Environment
 
 - Python 3.12 or newer, managed with `uv`. `ffmpeg` and `ffprobe` on PATH. Node 20 or newer for the frontend.
-- Linux, or Docker or WSL, for multi-core search. macOS runs one worker. Windows must pass `workers=1` or use Docker.
+- Linux, or Docker or WSL, for multi-core search. macOS runs one worker (measured on an M4 on 2026-11-24: a synthetic Located search in about 4 to 4.5 min, the backend suite in about 27 min). Windows must pass `workers=1` or use Docker.
+- The tests set `TRACE_DOTENV=0`, so a local `.env` never reaches them.
 - Network is needed for: flight data (GitHub: when a user asks for a day, and the newest day after sign-in unless `FLIGHTS_AUTO=0`), terrain tiles (AWS), the aircraft type table (OpenSky), the weather archive (Open-Meteo, only with `WEATHER_AUTO=1`), and, from the analyst's browser, map tiles for a Located result (OpenStreetMap, unless `MAP_TILES_URL` is empty). Fonts are bundled. `DOPPLERTRACK_CACHE` defaults to `data/cache/dopplertrack`.
 
 ## Commands
