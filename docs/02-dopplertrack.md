@@ -192,6 +192,21 @@ Installed with `uv add` from git at the pinned commit: Python 3.12.16, numpy 2.5
 
 So in power-saver this machine is about 1.2 to 1.9 times slower per core than the planning machine. The editor preview misses its 2 s target here (3.1 to 3.4 s) but stays under the 5 s limits in the M1 and M2 tests. Re-measure plugged in with the `performance` or `balanced` profile before M2; the machine has 8 cores and is on Linux, so detection and search can use more than one worker.
 
+### Measured on the presenting Mac (2026-11-24, *ran*)
+
+Apple M4 (10 cores), 16 GB, macOS, Python 3.12 from uv 0.13.9, ffmpeg 9.1, one worker (rule 7). Same command, `--hot --decoys 25 --editor`: `SMOKE TEST PASSED` in **5 min 22 s**. Every accuracy figure matched the runs above exactly (111 m then 1 m; 7,749 m uncorrected; 98 m then 48 m; decoys "no match" p 0.673 then "located" p 0.043). The plain run took 64 s end to end, 32 s of it in the baseline.
+
+| Step | Planning machine | Linux laptop (power-saver) | This Mac |
+|---|---|---|---|
+| `fit_box`, narrow 110 to 140 Hz box, widened | 3 s | 4.9 s | 4.2 s |
+| `fit_event`, 100 s bend boxes, widened band | 5.3 to 11 s | 9.1 to 18.0 s | 9.4 to 15.9 s |
+| quick preview on the same boxes | 1.7 to 1.8 s | 3.1 to 3.4 s | 2.6 to 3.4 s |
+| `fit_event`, 170 s by 80 Hz box as given | 8.5 to 9.8 s | 15.6 s | 13.1 s |
+| `detect_events`, fast settings | 60 s | 100 s | 72 s (2.4 s per minute) |
+| Baseline run | about 25 s | 38.3 s | 32.1 s |
+
+So one worker here is a little faster than the Linux laptop in power-saver and slower than the planning machine. The editor preview still misses its 2 s target. macOS cannot use more than one worker for the engine.
+
 Source check in M0: every signature in the API table above matches the installed source. One naming nit: the fifth parameter of `doppler.ideal_curve` is named `t_cpa` (documented in the source as the *emission* time of closest approach), not `t_cpa_emit`; pass `EventFit.t_cpa_emit` to it positionally or as `t_cpa=`.
 
 So detection is the slow step, not the search: with library defaults an hour of audio takes about ten minutes on one worker. Our triage uses the fast settings in slices and streams proposals as they come (`05-architecture.md`). A UAE day has far fewer propeller flights than the continental US, so one worker should be enough for the search; measure it in milestone 1.
