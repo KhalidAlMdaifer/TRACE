@@ -346,8 +346,9 @@ Measured during the build; method in `docs/03-method-and-evidence.md`.
 - No CI. The backend suite takes about 13 minutes on eight Linux cores and about 27 on the
   presenting Mac (one engine worker). Frontend tests cover only pure functions.
 - On the Mac a synthetic Located search takes about 4 to 4.5 minutes, against 1 min 45 s on
-  Linux; macOS gives the engine one worker (rule 7).
-- Docker was built and run once by hand, never from an empty clone. The last Docker changes
+  Linux; macOS gives the engine one worker (rule 7). In Docker (OrbStack) on the same Mac it
+  took 41 s, with the same answer; that is the way to demo a live search.
+- Docker was built and run by hand (2026-11-22 on Linux, 2026-11-24 on the Mac), never from an empty clone. The last Docker changes
   (forwarded address, security headers) were checked outside Docker only.
 - HTTPS is not provided; a deployment's own proxy must add it and set `SESSION_SECURE=1`.
 - A password change does not end sessions that are already open.

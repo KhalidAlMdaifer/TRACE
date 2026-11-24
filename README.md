@@ -89,7 +89,9 @@ docker compose exec api python -m app.cli demo
 Open http://localhost:8080 and sign in. Then follow "The demo" below. Data lives in
 `./data` on your machine.
 
-On Linux, if your user id is not 1000, start it with
+On a Mac, Docker is also the fast way to run it: the containers are Linux, so a search uses
+every core (measured: 41 s in Docker against about 4 minutes natively). OrbStack works
+(`brew install --cask orbstack`). On a Mac, or on Linux if your user id is not 1000, start it with
 `TRACE_UID=$(id -u) TRACE_GID=$(id -g) docker compose up --build` so the files in `./data`
 are yours.
 

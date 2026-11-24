@@ -205,7 +205,9 @@ Apple M4 (10 cores), 16 GB, macOS, Python 3.12 from uv 0.13.9, ffmpeg 9.1, one w
 | `detect_events`, fast settings | 60 s | 100 s | 72 s (2.4 s per minute) |
 | Baseline run | about 25 s | 38.3 s | 32.1 s |
 
-So one worker here is a little faster than the Linux laptop in power-saver and slower than the planning machine. The editor preview still misses its 2 s target. macOS cannot use more than one worker for the engine.
+So one worker here is a little faster than the Linux laptop in power-saver and slower than the planning machine. The editor preview still misses its 2 s target. Natively, macOS gives the engine one worker (rule 7).
+
+In Docker on the same Mac (OrbStack, its Linux VM given all 10 cores and 8 GB; worker started with 10 dopplertrack workers), the synthetic three-flyover case through `scripts/curl_walkthrough.sh`: search job **41 s** from start to finish, against 4 min 10 s native and 1 min 45 s on the Linux laptop. Same answer: `located`, p 0.0314, within about 71 m.
 
 Source check in M0: every signature in the API table above matches the installed source. One naming nit: the fifth parameter of `doppler.ideal_curve` is named `t_cpa` (documented in the source as the *emission* time of closest approach), not `t_cpa_emit`; pass `EventFit.t_cpa_emit` to it positionally or as `t_cpa=`.
 
