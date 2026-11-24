@@ -23,7 +23,6 @@ code yet. This file tells you what exists, what is verified, and what to do firs
 | `design/mockups/` | sources of the nine screens: Upload, When, Where, Flyovers, Review, Searching, and the Located, Candidates and Not locatable results | reference only, read as text; brought in line with the engine on 2026-11-21 |
 | `design/dot_map_prototype.py` | how the mockups' dot rows were generated | reference only; its polygons are rough placeholders |
 | `design/spectrogram_prototype.py` | how the flyover editor's sample spectrogram was generated | reference only; invented data |
-| `PROMPT.md` | the opening prompt for Claude Code | paste it as the first message |
 
 ## Read in this order
 
@@ -39,7 +38,6 @@ code yet. This file tells you what exists, what is verified, and what to do firs
 2. Do milestone M0 in `07-build-plan.md`: project setup, both scripts, then the coverage probe.
 3. Report the coverage findings to the user before building anything else.
 
-The opening prompt is in `PROMPT.md` at the root of this folder.
 
 ## Setup, expected to work as written
 

@@ -48,7 +48,7 @@ Read in this order. Each file is the authority for its subject; this guide summa
 | 14 | `docs/coverage-findings.md` | where and when the UAE has propeller traffic, measured |
 | 15 | `docs/demo-script.md` | a two-minute spoken demo |
 
-`PROMPT.md` is the original opening prompt the project was started from. The docs numbered
+The docs numbered
 00 to 09 were written as the plan before the build and then corrected as it went, so a
 statement in an early section can be superseded by an "As built" section further down the
 same file.
