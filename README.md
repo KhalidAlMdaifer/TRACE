@@ -11,6 +11,78 @@ recording picks the one that fits. TRACE wraps that method in a tool for analyst
 recording, give its date and a rough area, confirm the flyovers on a spectrogram, and get
 ranked location leads with a verdict, or a clear "not locatable".
 
+## The problem and the solution
+
+**The problem.** An investigation often holds a recording and has to ask where it was made:
+a video sent by a suspect, footage used to deceive or extort someone, a clip whose claimed
+location needs checking. Messaging apps strip the metadata, and what the camera shows can be
+staged or tell nothing. The sound is harder to fake, and nobody thinks to hide it.
+
+**The solution.** TRACE locates a recording from the aircraft it accidentally captured. The
+analyst uploads the file, gives its date and a rough area, and confirms each aircraft flyover
+on a spectrogram. TRACE matches the shape of each falling tone against that day's public
+flight tracks and answers in one of three ways:
+
+- **Located:** three or more flyovers agree on one place and one clock, and the match beats
+  the crowd of wrong flight pairs. Shown with its verdict, p value, uncertainty radius and
+  flyover count.
+- **Candidates:** two flyovers give ranked places, marked unconfirmed. Two never prove it.
+- **Not locatable:** said in seconds, with what was checked and what would help.
+
+What makes it usable in police work:
+
+- **Every result explains itself.** A result is a lead with its working shown, never a bare
+  pin: the statistical verdict, the p value, the radius, the flights matched, the limits that
+  applied.
+- **The output is ready for a case file.** A printable report carries the file's SHA-256, the
+  inputs, the method, the matched aircraft and times, and the data sources.
+- **It is accountable.** Sign-in on every route, a required case reference, and an audit log
+  of every upload, search and export.
+- **It is built for the UAE.** A region pack for the seven emirates, with a measured account
+  of where and when the method can work there ([docs/coverage-findings.md](docs/coverage-findings.md)).
+- **It is honest about its limits.** Most recordings end at "not locatable", and the app is
+  designed to say so quickly. See [Limits](#limits).
+
+## Technical choices, tools, APIs and data
+
+| Part | Choice | Why |
+|---|---|---|
+| Search engine | [dopplertrack](https://github.com/mjshiggins/dopplertrack), pinned at commit `2d899bb` | A published method, checked here on a real recording (96 m). TRACE builds on it and does not reimplement it. |
+| Inference | Physical modelling of the Doppler curve and a statistical test against wrong flight pairs | No trained model: each step can be shown and questioned, which a court or a supervisor will do. |
+| Backend | Python 3.12, FastAPI, SQLite (WAL), a job worker that runs each search in its own process | One folder of data, no services to operate; a search can be cancelled or crash without taking the app down. |
+| Frontend | React 19, TypeScript, Vite; Leaflet for the located map | A step-by-step flow that lives in the URL, so a reload or a second tab resumes where the case is. |
+| Audio | `ffmpeg` and `ffprobe` | Decode whatever is uploaded; the spectrogram is 40 to 450 Hz. |
+| Packaging | Docker Compose: api, worker, interface | One command to run; on a Mac it also makes the search use every core (41 s against about 4 min natively). |
+| Tests | pytest (107) and vitest (19) | Fits, searches and the service end to end on a synthetic recording with a known answer. |
+
+Data and outside services, all public:
+
+| Data | Source | Used for |
+|---|---|---|
+| Flight tracks (ADS-B) | [adsb.lol](https://www.adsb.lol/) daily archives, ODbL 1.0 | The trajectories each flyover is matched against; passed through an integrity filter first |
+| Aircraft types | ICAO Doc 8643 via the OpenSky Network | Keeping propeller aircraft, dropping jets |
+| Terrain height | AWS Terrain Tiles | The height of each ground point |
+| Air temperature | [Open-Meteo](https://open-meteo.com/) archive, or set by the analyst | The speed of sound, which moves the answer |
+| Boundaries | OpenStreetMap contributors, geoBoundaries | The emirates and regions of the area chooser |
+| Map tiles | OpenStreetMap | The street map under a located result |
+
+Nothing is sent to any of these about a case: they are read-only downloads of public data.
+
+## How to build and run
+
+With Docker (the short way; details in [Quick start with Docker](#quick-start-with-docker)):
+
+```bash
+cp .env.example .env        # then set APP_SECRET, ADMIN_EMAIL and ADMIN_PASSWORD; for the demo also DEFAULT_PACK=test and SHOW_DEV_PACKS=1
+mkdir -p data
+docker compose up --build
+docker compose exec api python -m app.cli demo     # in another terminal: installs the demo recording
+```
+
+Open http://localhost:8080, sign in, and follow [The demo](#the-demo). Without Docker, see
+[Quick start without Docker](#quick-start-without-docker). To run the tests: `uv run pytest`
+and `npm --prefix frontend test`.
+
 New to the project? [HANDOFF.md](HANDOFF.md) explains all of it in one file: the method, every
 feature, the structure, the decisions and what is unfinished.
 
@@ -133,7 +205,8 @@ Open http://localhost:5173.
    red fitted curve. The dashed boxes are automatic suggestions; they are hints, and several
    sit on the wrong part of a tone.
 5. **Review.** Type any case reference and submit.
-6. **Result.** About a minute later: **Located**, within about 50 to 100 m of
+6. **Result.** In under a minute with Docker (41 s measured on a 10-core Mac; about 4 minutes
+   natively on macOS, which runs one worker): **Located**, within about 50 to 100 m of
    25.0500° N, 55.2500° E, the point the recording was simulated at.
 
 To see the other outcomes: remove one flyover and submit again for **Candidates** (two
@@ -196,6 +269,8 @@ Measured during this build; details and method in
 | Same, at the library's default temperature | Located, p 0.002, 32 m |
 | Synthetic, three hand-drawn flyovers | Located, p 0.043, about 1 m |
 | Synthetic, two flyovers | Candidates; the true place ranked first but unconfirmed |
+| Synthetic, two flyovers, in the app on a Mac (2026-11-24) | Candidates, "no match", p 0.70; the true place was not in the top five |
+| Synthetic, three flyovers, in the app on the same Mac | Located, p 0.031, within about 71 m |
 | Synthetic audio against real UAE flights (no possible match) | "No match", p 0.75: no location claimed |
 | UAE track integrity, one day | 11.5% of track points failed a check |
 
