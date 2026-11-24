@@ -8,7 +8,7 @@ import { boxAround, DotMap, Locator, type MapPath, type Ring } from "../componen
 import { LocationMap } from "../components/LocationMap";
 import { Strip } from "../components/Strip";
 import { clock, coords, distance, googleMapsUrl, localClock, metresBetween, pText, SOURCES, zoneName } from "../format";
-import type { Step } from "../steps";
+import { failedSearchNote, type Step } from "../steps";
 import { caseLine } from "./SearchingStep";
 
 interface Props { kase: Case; pack: Pack | undefined; go: (s: Step) => void; newReport: () => void; header: ReactNode }
@@ -122,6 +122,14 @@ export function ResultStep({ kase, pack, go, newReport, header }: Props) {
       <button type="button" className="link-btn" style={{ padding: "12px 0 12px 12px" }} onClick={() => { setShowOutside(!showOutside); setPicked(null); }}>{showOutside ? "Back to your area" : "Show it"}</button>
     </div>
   );
+  // the newest search failed: say so, so this earlier result is not taken for its answer
+  const failedNote = failedSearchNote(kase);
+  const stale = failedNote && (
+    <div className="banner" role="alert">
+      <span className="error-line" style={{ fontSize: 14 }}>{failedNote}</span>
+      <button type="button" className="link-btn" style={{ padding: "12px 0 12px 12px", whiteSpace: "nowrap" }} onClick={() => go("review")}>Search again</button>
+    </div>
+  );
   const stripBoxes = events.map((e) => ({ id: e.id, t_start: e.box[0], t_end: e.box[1], f_lo: e.box[2], f_hi: e.box[3], curve: e.curve }));
   const paths = (list: ResultEvent[]): MapPath[] => list.filter((e) => e.path).map((e, i) => ({ ...e.path!, label: `Flight ${i + 1}` }));
   const areaChip = (kase.region_ids?.length || kase.custom_bbox) ? <div><span aria-hidden="true" className="sq" style={{ opacity: 0.6 }} /><span>Your selected area</span></div> : null;
@@ -139,6 +147,7 @@ export function ResultStep({ kase, pack, go, newReport, header }: Props) {
         <aside className="panel">
           {header}
           <div className="panel-body">
+            {stale}
             <div className="stack gap12 topline">
               <div className="mono11">{caseLine(kase)}</div>
               <h1>Not locatable</h1>
@@ -200,6 +209,7 @@ export function ResultStep({ kase, pack, go, newReport, header }: Props) {
         <aside className="panel">
           {header}
           <div className="panel-body">
+            {stale}
             <div className="stack topline" style={{ gap: 6 }}>
               <div className="mono11" style={{ marginBottom: 6 }}>{caseLine(kase)}</div>
               <div className="mono11 bright eyebrow"><span aria-hidden="true" className="sq" /><span>Estimated location</span></div>
@@ -305,6 +315,7 @@ export function ResultStep({ kase, pack, go, newReport, header }: Props) {
       <aside className="panel">
         {header}
         <div className="panel-body">
+          {stale}
           <div className="stack gap8 topline">
             <div className="mono11" style={{ marginBottom: 4 }}>{caseLine(kase)}</div>
             <div className="mono11 bright eyebrow"><span aria-hidden="true" className="sq hollow" /><span>Result from {nFly} flyover{nFly === 1 ? "" : "s"}</span></div>

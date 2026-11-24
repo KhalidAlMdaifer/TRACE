@@ -49,7 +49,7 @@ mkdir -p data/flights/uae data/coverage                          # fetch does no
 uv run dopplertrack fetch YYYY-MM-DD data/flights/uae/YYYY-MM-DD.npz \
     --bbox 22.6 26.1 51.5 56.4 --keep-jets --traces data/flights/uae/YYYY-MM-DD-traces.npz
 uv run python scripts/coverage_report.py data/flights/uae/YYYY-MM-DD-traces.npz --out data/coverage/YYYY-MM-DD
-uv run pytest                                                    # about 13 minutes: fits, searches and the service end to end on the synthetic case
+uv run pytest                                                    # about 13 minutes on Linux, 27 on the Mac: fits, searches and the service end to end on the synthetic case
 uv run pytest -m "not slow"                                      # skips the detection test
 uv run pytest -m reference                                       # the full Oyster Bay search through our code, about 5 minutes; needs data/reference/oyster_bay
 uv run python -m app.cli synth /tmp/trace-demo                   # write a synthetic recording with a known answer; prints the run command

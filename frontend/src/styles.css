@@ -247,6 +247,7 @@ button.who:hover { border-color: var(--text-3); }
 .cases thead th { height: 36px; font: 400 11px var(--font-mono); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-2); }
 .cases tbody th a { display: inline-flex; align-items: center; min-height: 44px; font-weight: 500; }
 .cases tbody tr:hover { background: var(--panel); }
+.cases tbody tr.opens { cursor: pointer; }
 .cases .dim { color: var(--text-3); }
 .cases .state { display: inline-flex; align-items: center; gap: 8px; }
 .cases .state .sq { background: var(--line-dash); }

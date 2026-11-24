@@ -14,6 +14,19 @@ export const isStep = (s: string): s is Step => (STEPS as readonly string[]).inc
 
 const searchActive = (c: Case) => c.job?.kind === "search" && (c.job.status === "queued" || c.job.status === "running");
 
+/** A search the worker has not picked up yet. */
+export const searchQueued = (c: Case) => c.job?.kind === "search" && c.job.status === "queued";
+
+const STOPPED: Record<string, string> = { worker_restarted: "the worker was restarted", timeout: "it ran out of time" };
+
+/** When the newest search failed and an earlier result is still shown, the line that says so. */
+export function failedSearchNote(c: Case): string | null {
+  if (!c.result || c.job?.kind !== "search" || c.job.status !== "failed") return null;
+  const e = c.job.error ?? "";
+  const why = STOPPED[e] ?? (e.startsWith("crashed") ? "it crashed" : e || "of an error");
+  return `Your latest search stopped before it finished, because ${why}. This is the result of the search before it.`;
+}
+
 /** Whether the case has what a step needs. */
 export function canEnter(step: Step, c: Case | null): boolean {
   if (step === "upload") return true;

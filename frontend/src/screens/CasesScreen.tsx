@@ -59,7 +59,8 @@ export function CasesScreen({ header, open, newReport }: { header: ReactNode; op
             <thead><tr><th scope="col">Reference</th><th scope="col">File</th><th scope="col">Recorded</th><th scope="col">State</th><th scope="col">Created</th><th scope="col"><span className="sr-only">Delete</span></th></tr></thead>
             <tbody>
               {rows.map((c) => (
-                <tr key={c.id}>
+                // the whole row opens the case for a mouse; the reference link is the way in for a keyboard
+                <tr key={c.id} className="opens" onClick={(e) => { if (!(e.target as HTMLElement).closest("a, button, [role=group]")) open(c.id); }}>
                   <th scope="row">
                     <a href={`/cases/${c.id}`} onClick={(e) => { e.preventDefault(); open(c.id); }}>{c.case_ref || "No reference yet"}</a>
                   </th>

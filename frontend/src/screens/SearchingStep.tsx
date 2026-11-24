@@ -1,9 +1,9 @@
 // Searching: named stages from the stream, and the map filling in as the search narrows.
-import { useMemo, useState, type ReactNode } from "react";
+import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { api, type Case, type Pack } from "../api";
 import { boxAround, DotMap, type Ring } from "../components/DotMap";
 import { coords, dateText, metresBetween } from "../format";
-import type { Step } from "../steps";
+import { searchQueued, type Step } from "../steps";
 import type { SearchState } from "../useCaseStream";
 
 const STAGES: [string, string][] = [["fits", "Flyovers fitted"], ["flights", "Flights loaded"], ["join", "Pairing flights"], ["lattice", "Laying search points"],
@@ -15,6 +15,14 @@ interface Props { kase: Case; pack: Pack | undefined; search: SearchState; conne
 
 export function SearchingStep({ kase, pack, search, connected, go, header }: Props) {
   const [cancelling, setCancelling] = useState(false);
+  // a search nobody has picked up: after a while, say the worker may not be running
+  const queued = searchQueued(kase) && !search.stage;
+  const [longWait, setLongWait] = useState(false);
+  useEffect(() => {
+    if (!queued) { setLongWait(false); return; }
+    const t = setTimeout(() => setLongWait(true), 20_000);
+    return () => clearTimeout(t);
+  }, [queued]);
   // the stream only says what happened since the page opened its replay; the job row says where the search is now
   const now = STAGES.findIndex(([id]) => id === (search.stage ?? kase.job?.stage));
   const regions = pack?.regions.features ?? [];
@@ -78,6 +86,11 @@ export function SearchingStep({ kase, pack, search, connected, go, header }: Pro
               <span className="helper tnum">{best ? `${coords(best[0], best[1])} · score ${best[2].toFixed(1)}` : "Updates as the search narrows"}</span>
             </div>
           </div>
+          {queued && !search.error && (
+            <div className="helper" role="status">
+              {longWait ? "Still waiting for the worker to start this search. If this does not change, the worker may not be running; cancel to go back." : "Waiting for the worker to start this search."}
+            </div>
+          )}
           {!connected && !search.error && <div className="helper" role="status">The connection dropped. Reconnecting; the search carries on meanwhile.</div>}
           {search.error && <div className="error-line" role="alert">The search stopped: {search.error} Nothing was lost; start it again from Review.</div>}
           <div className="actions">

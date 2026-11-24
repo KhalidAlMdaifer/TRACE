@@ -177,7 +177,7 @@ def test_a_recording_over_the_length_limit_is_refused(api, site, short_wav, monk
         r = api.post(f"/api/cases/{cid}/media", files={"file": ("long.wav", fh, "audio/wav")})
     assert r.status_code == 422 and err(r) == "too_long" and "hours" in r.json()["error"]["message"]
     assert api.get(f"/api/cases/{cid}").json()["media"] is None
-    assert not list((site["data"] / "uploads" / cid).glob("original*"))             # nothing of it is kept
+    assert not (site["data"] / "uploads" / cid).exists()                             # nothing of it is kept
 
 
 def test_case_fields_are_validated(api, case):

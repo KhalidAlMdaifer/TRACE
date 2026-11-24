@@ -400,7 +400,7 @@ demo walk-through (which region, date and boxes) is in `README.md`, "The demo".
 **Tests**
 
 ```bash
-uv run pytest                       # about 13 minutes
+uv run pytest                       # about 13 minutes on Linux, 27 on the Mac
 uv run pytest -m "not slow"         # skips the detection test
 npm --prefix frontend test          # 16 tests
 npm --prefix frontend run build     # type-check and production build

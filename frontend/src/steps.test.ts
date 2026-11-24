@@ -1,7 +1,7 @@
 import { describe, expect, it } from "vitest";
 import type { Case } from "./api";
 import { clock, coords, distance, flightsText, googleMapsUrl, maxHarmonics, metresBetween, presetOf, pText, rangesText, toHHMM, toMinutes } from "./format";
-import { backOf, canEnter, caseUrl, markStates, parseLocation, resolveStep, resumeStep } from "./steps";
+import { backOf, canEnter, caseUrl, failedSearchNote, markStates, parseLocation, resolveStep, resumeStep, searchQueued } from "./steps";
 
 const base: Case = {
   id: "01M7ZSXWCYCP3736S3QC4Z3X7M", case_ref: null, created_at: "", status: "draft", pack_id: "test", date_local: null, time_ranges: null,
@@ -148,5 +148,30 @@ describe("the flight-data icon", () => {
 
   it("links a point to Google Maps", () => {
     expect(googleMapsUrl(25.049994, 55.25)).toBe("https://www.google.com/maps/search/?api=1&query=25.04999%2C55.25000");
+  });
+});
+
+describe("a search that did not finish", () => {
+  const failedAgain = (error: string | null): Case => ({ ...done, job: { id: "j2", kind: "search", status: "failed", stage: "scoring", progress: null, error } });
+
+  it("says so on the earlier result it left in place", () => {
+    expect(resolveStep("result", failedAgain("timeout"))).toBe("result");
+    expect(failedSearchNote(failedAgain("worker_restarted"))).toMatch(/latest search stopped.*worker was restarted.*search before it/i);
+    expect(failedSearchNote(failedAgain("timeout"))).toMatch(/ran out of time/);
+    expect(failedSearchNote(failedAgain("crashed: exit code -9"))).toMatch(/crashed/);
+    expect(failedSearchNote(failedAgain("search_failed: no flights"))).toMatch(/search_failed: no flights/);
+  });
+
+  it("says nothing when the result is the latest search, or the search was cancelled", () => {
+    expect(failedSearchNote(done)).toBeNull();
+    expect(failedSearchNote({ ...done, job: { id: "j2", kind: "search", status: "cancelled", stage: null, progress: null, error: null } })).toBeNull();
+    expect(failedSearchNote({ ...done, job: { id: "j2", kind: "search", status: "done", stage: null, progress: null, error: null } })).toBeNull();
+    expect(failedSearchNote({ ...two, job: failedAgain("timeout").job })).toBeNull();     // no earlier result: Searching shows the error
+  });
+
+  it("knows a search still waiting for the worker", () => {
+    expect(searchQueued({ ...two, job: { id: "j", kind: "search", status: "queued", stage: null, progress: null, error: null } })).toBe(true);
+    expect(searchQueued(searching)).toBe(false);
+    expect(searchQueued(done)).toBe(false);
   });
 });
