@@ -12,8 +12,8 @@ historical flight tracks, using the open-source `dopplertrack` library as the en
 Where, the flyover editor, Review, Searching, and the Located, Candidates and Not locatable
 results with a printable report. Flight days are fetched on request, and the newest published day
 automatically after sign-in (`FLIGHTS_AUTO`), through an integrity
-filter, and the temperature is looked up automatically. The Docker Compose stack was built and run on 2026-11-22; what is left is recording the
-demo video. The core pipeline is in `backend/app/core` and runs
+filter, and the temperature is looked up automatically. The Docker Compose stack was built and run on 2026-11-22 and again on 2026-11-24 on the
+presenting Mac; the hackathon submission (slides, a one-minute video) was made on 2026-11-25. The core pipeline is in `backend/app/core` and runs
 from the terminal (`python -m app.cli`); the service (`backend/app/api`, `worker.py`,
 `jobs/`) takes a case from upload to result over HTTP. The reference
 implementations from `scripts/smoke_dopplertrack.py` now live in `core/events.py` (`fit`,

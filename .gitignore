@@ -9,3 +9,5 @@ dist/
 *.zip
 submission/
 .superpowers/
+.claude/
+docs/superpowers/
