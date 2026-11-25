@@ -66,7 +66,11 @@ Data and outside services, all public:
 | Boundaries | OpenStreetMap contributors, geoBoundaries | The emirates and regions of the area chooser |
 | Map tiles | OpenStreetMap | The street map under a located result |
 
-Nothing is sent to any of these about a case: they are read-only downloads of public data.
+These are read-only downloads of public data, and recordings never leave the machine. One request
+does depend on a case: the street map under a located result asks the tile server for the tiles
+around the estimate, from the analyst's browser. Set `MAP_TILES_URL` to nothing, or to a tile
+server of your own, to keep that in-house. "Open in Google Maps" sends the coordinates to Google
+only when it is clicked.
 
 ## How to build and run
 
@@ -213,7 +217,7 @@ To see the other outcomes: remove one flyover and submit again for **Candidates*
 flyovers never confirm a place); upload any recording with no aircraft and choose "Finish as
 not locatable" for **Not locatable**.
 
-`scripts/curl_walkthrough.sh` does the same from the command line. A two-minute spoken
+`scripts/curl_walkthrough.sh` does the same from the command line. A three-minute spoken
 version is in [docs/demo-script.md](docs/demo-script.md).
 
 ### A real recording
